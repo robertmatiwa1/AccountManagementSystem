@@ -1,0 +1,28 @@
+﻿# ASP.NET Core
+[Bb]in/
+[Oo]bj/
+*.user
+*.userprefs
+*.suo
+*.cache
+*.vs/
+*.vscode/
+# NuGet
+[Nn]uget/
+*.nupkg
+packages/
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Ll]og/
+# Database
+*.mdf
+*.ldf
+App_Data/
+# Publishing
+publish/
+# Local development
+appsettings.Development.json
