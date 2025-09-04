@@ -1,0 +1,38 @@
+@model AccountManagementSystem.Models.Account
+
+<h1>Account Details</h1>
+
+<div>
+    <h4>Account: @Model.account_number</h4>
+    <p><strong>Balance:</strong> @Model.outstanding_balance</p> <!-- Changed from Balance to outstanding_balance -->
+    <p><strong>Owner:</strong> @Model.person_codeNavigation?.surname</p> <!-- Changed from Person.Surname to person_codeNavigation.surname -->
+</div>
+
+<h3>Transactions</h3>
+<p>
+    <a asp-controller="Transactions" asp-action="Create" asp-route-accountCode="@Model.code">Add Transaction</a> <!-- Changed from AccountCode to code -->
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th> <!-- Changed from Type to Description -->
+            <th>Amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var t in Model.Transactions) {
+        <tr>
+            <td>@t.transaction_date.ToShortDateString()</td> <!-- Changed from Date to transaction_date -->
+            <td>@t.description</td> <!-- Changed from Type to description -->
+            <td>@t.amount</td> <!-- Changed from Amount to amount -->
+            <td>
+                <a asp-controller="Transactions" asp-action="Edit" asp-route-id="@t.code">Edit</a> | <!-- Changed from TransactionCode to code -->
+                <a asp-controller="Transactions" asp-action="Delete" asp-route-id="@t.code">Delete</a> <!-- Changed from TransactionCode to code -->
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

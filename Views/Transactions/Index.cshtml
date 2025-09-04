@@ -1,0 +1,45 @@
+@model X.PagedList.IPagedList<AccountManagementSystem.Models.Transaction>
+@using X.PagedList.Mvc.Core
+
+<h2>Transactions</h2>
+
+<form method="get">
+    <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Search by description or account number" /> <!-- Changed placeholder text -->
+    <button type="submit">Search</button>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewData["DateSortParm"], currentFilter = ViewData["CurrentFilter"] })
+        </th>
+        <th>Description</th> <!-- Changed from Type to Description -->
+        <th>
+            @Html.ActionLink("Amount", "Index", new { sortOrder = ViewData["AmountSortParm"], currentFilter = ViewData["CurrentFilter"] })
+        </th>
+        <th>Account</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.transaction_date.ToShortDateString()</td> <!-- Changed from Date to transaction_date -->
+            <td>@item.description</td> <!-- Changed from Type to description -->
+            <td>@item.amount</td> <!-- Changed from Amount to amount -->
+            <td>@item.account_codeNavigation?.account_number</td> <!-- Changed from Account.AccountNumber to account_codeNavigation.account_number -->
+            <td>
+                <a asp-action="Details" asp-route-id="@item.code">Details</a> | <!-- Changed from TransactionCode to code -->
+                <a asp-action="Edit" asp-route-id="@item.code">Edit</a> | <!-- Changed from TransactionCode to code -->
+                <a asp-action="Delete" asp-route-id="@item.code">Delete</a> <!-- Changed from TransactionCode to code -->
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- ✅ Pagination controls -->
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewData["CurrentSort"], currentFilter = ViewData["CurrentFilter"] }))
+</div>

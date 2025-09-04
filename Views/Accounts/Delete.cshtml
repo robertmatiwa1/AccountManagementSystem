@@ -1,0 +1,27 @@
+@model AccountManagementSystem.Models.Account
+
+<h1>Delete Account</h1>
+
+<h3>Are you sure you want to delete this account?</h3>
+<div>
+    <h4>Account: @Model.account_number</h4>
+    <p><strong>Balance:</strong> @Model.outstanding_balance.ToString("C")</p>
+    <p><strong>Owner:</strong> @Model.person_codeNavigation?.surname, @Model.person_codeNavigation?.name</p>
+    <p><strong>Status:</strong> @(Model.is_closed ? "Closed" : "Open")</p>
+    
+    @if (Model.Transactions != null && Model.Transactions.Any())
+    {
+        <div class="alert alert-warning">
+            <strong>Warning!</strong> This account has @Model.Transactions.Count transaction(s). 
+            Deleting the account will also delete all associated transactions.
+        </div>
+    }
+</div>
+
+<form id="deleteForm" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="code" />
+    <button type="button" onclick="showDeleteConfirmation('deleteForm')" class="btn btn-danger">Delete</button>
+    <a asp-controller="Persons" asp-action="Details" asp-route-id="@Model.person_code" class="btn btn-secondary">Cancel</a>
+</form>
+
+<partial name="_DeleteConfirmation" />

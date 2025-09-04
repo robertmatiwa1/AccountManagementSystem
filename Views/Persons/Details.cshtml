@@ -1,0 +1,35 @@
+@model AccountManagementSystem.Models.Person
+
+<h1>Person Details</h1>
+
+<div>
+    <h4>@Model.surname (@Model.id_number)</h4> <!-- Changed from Surname/IdNumber to surname/id_number -->
+    <p><strong>Code:</strong> @Model.code</p> <!-- Changed from Code to code -->
+    <p><strong>Name:</strong> @Model.name</p> <!-- Added name field -->
+</div>
+
+<h3>Accounts</h3>
+<p>
+    <a asp-controller="Accounts" asp-action="Create" asp-route-personCode="@Model.code">Add New Account</a> <!-- Changed from Code to code -->
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Account Number</th>
+            <th>Balance</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var acc in Model.Accounts) {
+        <tr>
+            <td>@acc.account_number</td> <!-- This depends on your Account model -->
+            <td>@acc.outstanding_balance</td> <!-- This depends on your Account model -->
+            <td>
+                <a asp-controller="Accounts" asp-action="Details" asp-route-id="@acc.code">View Transactions</a> <!-- This depends on your Account model -->
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

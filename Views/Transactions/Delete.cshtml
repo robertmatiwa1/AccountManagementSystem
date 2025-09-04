@@ -1,0 +1,20 @@
+@model AccountManagementSystem.Models.Transaction
+
+<h1>Delete Transaction</h1>
+
+<h3>Are you sure you want to delete this transaction?</h3>
+<div>
+    <h4>Transaction Details</h4>
+    <p><strong>Date:</strong> @Model.transaction_date.ToShortDateString()</p>
+    <p><strong>Description:</strong> @Model.description</p>
+    <p><strong>Amount:</strong> @Model.amount.ToString("C")</p>
+    <p><strong>Account:</strong> @Model.account_codeNavigation?.account_number</p>
+</div>
+
+<form id="deleteForm" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="code" />
+    <button type="button" onclick="showDeleteConfirmation('deleteForm')" class="btn btn-danger">Delete</button>
+    <a asp-controller="Accounts" asp-action="Details" asp-route-id="@Model.account_code" class="btn btn-secondary">Cancel</a>
+</form>
+
+<partial name="_DeleteConfirmation" />

@@ -1,0 +1,20 @@
+@model AccountManagementSystem.Models.Person
+
+<h1>Edit Person</h1>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="code" /> <!-- Changed from Code to code -->
+    <div class="form-group">
+        <label asp-for="name"></label> <!-- Added name field -->
+        <input asp-for="name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="surname"></label> <!-- Changed from Surname to surname -->
+        <input asp-for="surname" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="id_number"></label> <!-- Changed from IdNumber to id_number -->
+        <input asp-for="id_number" class="form-control" />
+    </div>
+    <button type="submit">Save</button>
+</form>

@@ -1,0 +1,29 @@
+@model AccountManagementSystem.Models.Transaction
+
+<h1>Edit Transaction</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="code" /> <!-- Changed from TransactionCode to code -->
+    <input type="hidden" asp-for="account_code" /> <!-- Changed from AccountCode to account_code -->
+
+    <div class="form-group">
+        <label asp-for="transaction_date"></label> <!-- Changed from Date to transaction_date -->
+        <input asp-for="transaction_date" class="form-control" type="date" />
+        <span asp-validation-for="transaction_date" class="text-danger"></span> <!-- Changed validation -->
+    </div>
+
+    <div class="form-group">
+        <label asp-for="description"></label> <!-- Changed from Type to description -->
+        <input asp-for="description" class="form-control" />
+        <span asp-validation-for="description" class="text-danger"></span> <!-- Changed validation -->
+    </div>
+
+    <div class="form-group">
+        <label asp-for="amount"></label> <!-- Changed from Amount to amount -->
+        <input asp-for="amount" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="amount" class="text-danger"></span> <!-- Changed validation -->
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-controller="Accounts" asp-action="Details" asp-route-id="@Model.account_code" class="btn btn-secondary">Cancel</a> <!-- Changed from AccountCode to account_code -->
+</form>

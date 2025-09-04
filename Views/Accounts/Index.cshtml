@@ -1,0 +1,45 @@
+@model X.PagedList.IPagedList<AccountManagementSystem.Models.Account>
+@using X.PagedList.Mvc.Core
+
+<h2>Accounts</h2>
+
+<form method="get">
+    <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Search by account number or surname" />
+    <button type="submit">Search</button>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Account Number", "Index", new { sortOrder = ViewData["AccountSortParm"], currentFilter = ViewData["CurrentFilter"] })
+        </th>
+        <th>
+            @Html.ActionLink("Balance", "Index", new { sortOrder = ViewData["BalanceSortParm"], currentFilter = ViewData["CurrentFilter"] })
+        </th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.account_number</td> <!-- Changed from AccountNumber to account_number -->
+            <td>@item.outstanding_balance</td> <!-- Changed from Balance to outstanding_balance -->
+            <td>@item.person_codeNavigation?.surname</td> <!-- Changed from Person.Surname to person_codeNavigation.surname -->
+            <td>@(item.is_closed ? "Closed" : "Open")</td> <!-- Changed from IsClosed to is_closed -->
+            <td>
+                <a asp-action="Details" asp-route-id="@item.code">Details</a> | <!-- Changed from AccountCode to code -->
+                <a asp-action="Edit" asp-route-id="@item.code">Edit</a> | <!-- Changed from AccountCode to code -->
+                <a asp-action="Delete" asp-route-id="@item.code">Delete</a> <!-- Changed from AccountCode to code -->
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- ✅ Pagination controls -->
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewData["CurrentSort"], currentFilter = ViewData["CurrentFilter"] }))
+</div>
